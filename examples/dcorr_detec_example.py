@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
         # Instantiates the detection class with specified parameters and associated data class for later analysis of the detection process.
         detection_data = mmtb.DetectionData()
-        detection = mmtb.evaluation.detection.ThresholdDetection(pilot_symbolstring=experiment.trans_param.total_symbol_string[:n_pilots],
+        detection = mmtb.evaluation.detection.ThresholdDetection(pilot_symbol_string=experiment.trans_param.total_symbol_string[:n_pilots+skip_n_symbols],
                                                                  symbol_map=experiment.trans_param.symbol_map,
                                                                  n_window=n_window,
                                                                  n_coherence=n_coherence,
@@ -127,7 +127,7 @@ if __name__ == "__main__":
         # Plots the detection samples colored corresponding to its true symbol #
         colors = list(mcolors.TABLEAU_COLORS.values())
         symbol_sample_dict = dict()
-        for detection_metric_coeff, symbol in zip(synchronization_data.detection_metric_coeffs, experiment.trans_param.n_symbols):
+        for detection_metric_coeff, symbol in zip(synchronization_data.detection_metric_coeffs, experiment.trans_param.symbol_string):
             try:
                 symbol_sample_dict[symbol].append(detection_metric_coeff)
             except:
@@ -139,10 +139,10 @@ if __name__ == "__main__":
 
         # Plots the various threshold values over time #
         for index, threshold_vals in detection_data.threshold_vals.items():
-            ax1.plot(synchronization_data.detection_metric_coeffs.times, threshold_vals, label=f"$\\xi_{{{index}}}$", linestyle="--", color=colors[int(index)])
+            ax1.plot(synchronization_data.detection_metric_coeffs.times[skip_n_symbols:], threshold_vals[skip_n_symbols:], label=f"$\\xi_{{{index}}}$", linestyle="--", color=colors[int(index)])
 
         # Plots the sychronization metric function for reference #
-        ax1.plot(synchronization_data.metric_coeffs.times, synchronization_data.metric_coeffs.values, label=f"$\\varphi_\\mathrm{{D}}(t_n)$", color="grey", alpha=.3)
+        ax1.plot(synchronization_data.metric_coeffs.times, synchronization_data.metric_coeffs.values, label=f"$\\varphi(t_n)$", color="grey", alpha=.3)
 
         ax1.set_xlabel(r"$k$")
         ax1.set_ylabel(r"$d[k]$")

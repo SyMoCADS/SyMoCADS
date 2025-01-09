@@ -21,7 +21,7 @@ class ThresholdDetection(DetectionBase):
 
     def __init__(
         self,
-        pilot_symbolstring: Sequence[str],
+        pilot_symbol_string: Sequence[str],
         symbol_map: dict[str, float],
         n_window: int,
         n_coherence: int,
@@ -30,21 +30,21 @@ class ThresholdDetection(DetectionBase):
     ) -> None:
         super().__init__(detec_data, skip_n_symbols)
 
-        if n_coherence + len(pilot_symbolstring) - n_window < 0:
+        if n_coherence + len(pilot_symbol_string) - n_window < 0:
             raise ValueError(
-                f"The detection parameters must fullfil the constraint:\n\tn_coherence + len(pilot_symbolstring) - n_window >= 0\ncurrently: {n_coherence} +  {len(pilot_symbolstring)} - {n_window} = {n_coherence+len(pilot_symbolstring)-n_window}"
+                f"The detection parameters must fullfil the constraint:\n\tn_coherence + len(pilot_symbol_string) - n_window >= 0\ncurrently: {n_coherence} +  {len(pilot_symbol_string)} - {n_window} = {n_coherence+len(pilot_symbol_string)-n_window}"
             )
 
         if n_coherence == None:
             n_coherence = n_window
 
-        self._n_pilots = len(pilot_symbolstring)
+        self._n_pilots = len(pilot_symbol_string)
         self._n_window = n_window
         self._n_coherence = n_coherence
 
         self._symbol_map = symbol_map
         self._mod_order = len(symbol_map.keys())
-        self._pilot_symbolstring = pilot_symbolstring
+        self._pilot_symbol_string = pilot_symbol_string
 
         self._threshold_vals = np.zeros(self._mod_order - 1)
         self._symbol_sample_map = {
@@ -58,7 +58,7 @@ class ThresholdDetection(DetectionBase):
         self._sample_counter = 0
 
         for symbol in self._symbol_map.keys():
-            if symbol not in self._pilot_symbolstring[skip_n_symbols:]:
+            if symbol not in self._pilot_symbol_string[skip_n_symbols:]:
                 raise ValueError(
                     "No all possible symbols are included in the effective pilot sequence"
                 )
@@ -126,7 +126,7 @@ class ThresholdDetection(DetectionBase):
         if not self._pilots_received:
             self._last_samples.append(detection_sample.value)
             self._last_symbols.append(
-                self._pilot_symbolstring[self._sample_counter - 1])
+                self._pilot_symbol_string[self._sample_counter - 1])
             self._last_detection_times.append(detection_sample.time)
 
             if self._sample_counter >= self._n_pilots:
@@ -147,7 +147,7 @@ class ThresholdDetection(DetectionBase):
                 if self._detec_data != None:
                     for i in range(self._n_pilots):
                         self._detec_data.append(
-                            self._pilot_symbolstring[i],
+                            self._pilot_symbol_string[i],
                             self._last_detection_times[i],
                             np.copy(self._threshold_vals),
                         )
@@ -155,7 +155,7 @@ class ThresholdDetection(DetectionBase):
                 del self._last_detection_times
                 self._sample_counter = 0
 
-            return self._pilot_symbolstring[self._sample_counter - 1]
+            return self._pilot_symbol_string[self._sample_counter - 1]
 
         else:
             threshold_index = np.where(

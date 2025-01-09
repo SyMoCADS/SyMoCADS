@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
         # Instantiates the detection class with specified parameters and associated data class for later analysis of the detection process.
         detection_data = mmtb.DetectionData()
-        detection = mmtb.evaluation.detection.ThresholdDetection(pilot_symbolstring=experiment.trans_param.total_symbol_string[:n_pilots],
+        detection = mmtb.evaluation.detection.ThresholdDetection(pilot_symbol_string=experiment.trans_param.total_symbol_string[:n_pilots+skip_n_symbols],
                                                                  symbol_map=experiment.trans_param.symbol_map,
                                                                  n_window=n_window,
                                                                  n_coherence=n_coherence,

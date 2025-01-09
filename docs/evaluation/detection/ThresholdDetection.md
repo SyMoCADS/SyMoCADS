@@ -7,9 +7,11 @@
 This class inherits from [DetectionBase](./DetectionBase.md) in order to implement a threshold detection.
 
 > Parameters:
-+ `pilot_symbolstring: Sequence[str]`
++ `pilot_symbol_string: Sequence[str]`
 
-    String containing the pilot symbol sequence.
+    String containing the pilot symbol sequence. 
+    
+    **Attention**: The initial skipped symbols must also be included in the pilot symbol string.
 
 + `symbol_map: dict[str, float]` (dict[str(&middot; &ge; 0), 0 &le; &middot; &le; 1])
 
