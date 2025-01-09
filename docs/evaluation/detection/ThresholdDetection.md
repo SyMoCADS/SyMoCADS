@@ -35,6 +35,6 @@ This class inherits from [DetectionBase](./DetectionBase.md) in order to impleme
 
 > Methods
 
-+ $\color{mediumpurple}\_\_call\_\_$(sample_val: float | None) -> `str | None`
++ $\color{mediumpurple}{\_\_call\_\_}$(sample_val: float | None) -> `str | None`
 
     This is the `__call__` dunder method for this class, which receives data sequentially. Returns the detect symbol character in form of a `str` upon succesful detection; otherwise returns `False`.
