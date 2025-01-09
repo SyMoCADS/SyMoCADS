@@ -9,7 +9,9 @@ This repository contains the experiments and the associated code used to evaluat
 ## Installation
 The *mmtb* package can easily be installed via the pip package manager by entering:
 
-```pip install git+https://github.com/SyMoCADS/SyMoCADS.git```
+```
+pip install git+https://github.com/SyMoCADS/SyMoCADS.git
+```
 
 ## Module Structure
 * mmtb
